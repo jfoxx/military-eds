@@ -35,17 +35,12 @@ document.getElementById('copy-btn').addEventListener('click', () => {
   if (selected) {
     navigator.clipboard.writeText(selected);
 
-    // Reset all checkboxes
+    // Reset all checkboxes so palette starts fresh next time
     document.querySelectorAll('#tag-list input[type=checkbox]').forEach(cb => cb.checked = false);
 
-    // Close the palette (remove it from DOM)
-    const palette = document.body.closest('html'); 
-    // If running inside Sidekick palette, you can call sidekick.closePalette()
+    // Close the palette properly
     if (window.sidekick && typeof window.sidekick.closePalette === 'function') {
       window.sidekick.closePalette();
-    } else {
-      // Fallback: hide the palette container if standalone
-      document.body.innerHTML = '<p>Tags copied to clipboard. Palette closed.</p>';
     }
   }
 });
