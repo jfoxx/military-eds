@@ -6,23 +6,16 @@ async function loadTags() {
     const container = document.getElementById('tag-list');
     container.innerHTML = '';
 
-    // Extract tag names after last slash
-    const tags = data.data.map(t => {
-      const raw = t['Tag'] || t['tag'] || '';
-      return raw.split('/').pop();
-    });
+    // Use only the "title" field
+    const tags = data.data.map(t => t.title);
 
-    tags.forEach(tag => {
+    tags.forEach(title => {
       const label = document.createElement('label');
       label.className = 'tag-item';
 
       const input = document.createElement('input');
       input.type = 'checkbox';
-      input.value = tag;
-
-      // Convert to title case for display
-      const title = tag.replace(/-/g, ' ')
-                       .replace(/\b\w/g, c => c.toUpperCase());
+      input.value = title; // copy the title itself
 
       label.appendChild(input);
       label.appendChild(document.createTextNode(' ' + title));
@@ -36,7 +29,7 @@ async function loadTags() {
 
 document.getElementById('copy-btn').addEventListener('click', () => {
   const selected = [...document.querySelectorAll('#tag-list input[type=checkbox]:checked')]
-    .map(cb => cb.value)
+    .map(cb => cb.value) // copy the titles
     .join(',');
   if (selected) {
     navigator.clipboard.writeText(selected);
