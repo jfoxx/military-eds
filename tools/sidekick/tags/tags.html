@@ -4,23 +4,29 @@
   <meta charset="UTF-8">
   <title>Tags Palette</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h2 {
-      margin-bottom: 10px;
-    }
-    .tag-list {
-      max-height: 400px;
-      overflow-y: auto;
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { margin-bottom: 10px; }
+    .tabs { display: flex; margin-bottom: 10px; }
+    .tab {
+      padding: 8px 12px;
+      margin-right: 5px;
+      background: #eee;
       border: 1px solid #ccc;
+      border-radius: 4px 4px 0 0;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: #0078d4;
+      color: #fff;
+    }
+    .tab-content {
+      border: 1px solid #ccc;
+      border-top: none;
       padding: 10px;
+      max-height: 300px;
+      overflow-y: auto;
     }
-    .tag-item {
-      display: block;
-      margin: 5px 0;
-    }
+    .tag-item { display: block; margin: 5px 0; }
     button {
       margin-top: 15px;
       padding: 8px 12px;
@@ -30,14 +36,17 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    button:hover {
-      background: #005a9e;
-    }
+    button:hover { background: #005a9e; }
   </style>
 </head>
 <body>
-  <h2>Select Topics</h2>
-  <div id="tag-list" class="tag-list"></div>
+  <h2>Select Tags</h2>
+  <div class="tabs">
+    <div class="tab active" data-category="topics">Topics</div>
+    <div class="tab" data-category="type">Type</div>
+    <div class="tab" data-category="branch">Branch</div>
+  </div>
+  <div id="tab-content" class="tab-content"></div>
   <button id="copy-btn">Copy Selected</button>
 
   <script src="tags.js"></script>
