@@ -245,7 +245,10 @@ function showAltTextDialog(assetId, assetData) {
       setStatus('✅ Alt text copied to clipboard');
       // Close the entire DVIDS popover after a brief moment
       setTimeout(() => {
-        window.close();
+        chrome.runtime.sendMessage('igkmdomcgoebiipaifhmpfjhbjccggml', {
+          id: 'dvids-search',
+          action: 'closePalette',
+        });
       }, 500);
     } catch (err) {
       console.error('[COPY ALT TEXT ERROR]', err);
