@@ -1,24 +1,4 @@
-async function fetchFeaturedArticle() {
-  try {
-    const response = await fetch('/news/query-index.json');
-    if (!response.ok) throw new Error(`Failed to fetch articles: ${response.status}`);
-
-    const data = await response.json();
-
-    // Filter for articles with feature='true' and sort by releaseDate (most recent first)
-    const featuredArticles = data.data
-      .filter((article) => article.feature === 'true')
-      .sort((a, b) => parseInt(b.releaseDate, 10) - parseInt(a.releaseDate, 10));
-
-    if (featuredArticles.length === 0) {
-      throw new Error('No featured articles found');
-    }
-
-    return featuredArticles[0]; // Return the most recent featured article
-  } catch (error) {
-    return null;
-  }
-}
+import { fetchNewsArticles } from '../../scripts/news-data.js';
 
 function buildHeroContent(article) {
   // Create the hero structure matching the hero block CSS
@@ -40,14 +20,18 @@ function buildHeroContent(article) {
 }
 
 export default async function decorate(block) {
-  // Fetch the most recent featured article
-  const article = await fetchFeaturedArticle();
+  // Fetch the most recent featured article using shared utility
+  const articles = await fetchNewsArticles({
+    featured: true,
+    limit: 1,
+    sortBy: 'releaseDate',
+  });
 
-  if (!article) {
+  if (!articles || articles.length === 0) {
     block.innerHTML = '<p>No featured article available</p>';
     return;
   }
 
   // Build and inject the hero content
-  block.innerHTML = buildHeroContent(article);
+  block.innerHTML = buildHeroContent(articles[0]);
 }
