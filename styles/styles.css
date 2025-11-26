@@ -145,6 +145,8 @@ body.appear {
 header {
   height: var(--nav-height);
   background-color: var(--header-background-color);
+  position: relative;
+  z-index: 100;
 }
 
 header .header[data-block-status="loaded"],
@@ -204,6 +206,11 @@ pre {
   background-color: var(--light-color);
   overflow-x: auto;
   white-space: pre;
+}
+
+main {
+  position: relative;
+  z-index: 1;
 }
 
 main > div {

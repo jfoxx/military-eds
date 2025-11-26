@@ -4,6 +4,8 @@
 .banner {
   background-color: #000;
   font-family: var(--body-font-family);
+  position: relative;
+  z-index: 200;
 }
 
 .banner-container {
