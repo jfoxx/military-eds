@@ -30,6 +30,13 @@ header nav[aria-expanded='true'] {
   min-height: 100dvh;
 }
 
+/* Center logo on mobile by making grid columns equal */
+@media (width < 900px) {
+  header nav {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}
+
 @media (width >= 900px) {
   header nav {
     display: flex;
@@ -63,8 +70,9 @@ header nav .nav-hamburger {
 }
 
 header nav .nav-hamburger button {
-  height: 22px;
-  margin: 0;
+  height: 42px;
+  width: 42px;
+  margin: 0 0 0 12px;
   border: 0;
   border-radius: 0;
   padding: 0;
@@ -72,6 +80,7 @@ header nav .nav-hamburger button {
   overflow: initial;
   text-overflow: initial;
   white-space: initial;
+  background: transparent;
 }
 
 header nav .nav-hamburger-icon,
@@ -143,9 +152,23 @@ header .nav-brand {
   line-height: 1;
 }
 
+/* Center logo on mobile */
+@media (width < 900px) {
+  header .nav-brand {
+    justify-self: center;
+  }
+}
+
 header nav .nav-brand img {
   width: 300px;
   height: auto;
+}
+
+/* Adjust logo size on mobile */
+@media (width < 900px) {
+  header nav .nav-brand img {
+    width: 200px;
+  }
 }
 
 /* sections */
@@ -160,7 +183,13 @@ header nav[aria-expanded='true'] .nav-sections {
   display: block;
   visibility: visible;
   align-self: start;
-  
+}
+
+/* Add left padding on mobile to align with hamburger button */
+@media (width < 900px) {
+  header nav[aria-expanded='true'] .nav-sections {
+    padding-left: 12px;
+  }
 }
 
 header nav .nav-sections ul {
@@ -270,8 +299,11 @@ header nav .nav-tools {
   grid-area: tools;
 }
 
-header nav .default-content-wrapper {
+/* Only float right on desktop, not mobile */
+@media (width >= 900px) {
+  header nav .default-content-wrapper {
     float: right;
+  }
 }
 
 nav.breadcrumbs {
@@ -290,6 +322,18 @@ nav.breadcrumbs {
             &:not(:last-child)::after {
                 content: '/';
                 margin-left: 8px;
+            }
+
+            /* Hide last breadcrumb item (current page) on mobile */
+            @media (width < 900px) {
+                &:last-child {
+                    display: none;
+                }
+
+                /* Remove separator after new last item */
+                &:nth-last-child(2)::after {
+                    display: none;
+                }
             }
         }
     }

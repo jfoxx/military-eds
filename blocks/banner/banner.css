@@ -42,8 +42,14 @@
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0.5rem 0;
+  padding: 0.5rem 24px;
   gap: 0.5rem;
+}
+
+@media (width >= 900px) {
+  .usa-banner__inner {
+    padding: 0.5rem 32px;
+  }
 }
 
 .grid-col-auto {
@@ -79,6 +85,15 @@
   font-weight: 700;
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* On mobile, hide the text and only show the icon */
+@media (width < 640px) {
+  .usa-banner__header-action {
+    font-size: 0;
+    text-decoration: none;
+    margin-left: 0;
+  }
 }
 
 .usa-banner__header-action-icon {
@@ -170,10 +185,16 @@
 }
 
 .usa-banner__content .grid-row {
-  padding: 1rem;
+  padding: 1rem 24px;
   max-width: 1200px;
   margin: 0 auto;
   gap: 2rem;
+}
+
+@media (width >= 900px) {
+  .usa-banner__content .grid-row {
+    padding: 1rem 32px;
+  }
 }
 
 .grid-gap-lg {
