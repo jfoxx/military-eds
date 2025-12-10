@@ -1,0 +1,128 @@
+/* DVIDS News Block Styles */
+
+.dvids-news {
+  padding: 2rem 0;
+}
+
+/* Header with DVIDS attribution */
+.dvids-news .dvids-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border, #ddd);
+}
+
+.dvids-news .dvids-source {
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #666);
+}
+
+.dvids-news .dvids-source a {
+  color: var(--color-link, #005ea2);
+  text-decoration: none;
+}
+
+.dvids-news .dvids-source a:hover {
+  text-decoration: underline;
+}
+
+.dvids-news .dvids-count {
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #666);
+}
+
+/* Cards grid layout */
+.dvids-news ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.dvids-news ul li {
+  background: var(--color-background-card, #fff);
+  border: 1px solid var(--color-border, #ddd);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dvids-news ul li:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Card image */
+.dvids-news .cards-card-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-background-muted, #f0f0f0);
+}
+
+.dvids-news .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card body */
+.dvids-news .cards-card-body {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dvids-news .cards-card-body h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: var(--color-text, #1b1b1b);
+}
+
+.dvids-news .dvids-meta {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #666);
+  margin: 0 0 0.75rem;
+}
+
+.dvids-news .dvids-description {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-text, #1b1b1b);
+  margin: 0 0 1rem;
+  flex: 1;
+}
+
+.dvids-news .button-container {
+  margin: 0;
+}
+
+/* Loading and empty states */
+.dvids-news .dvids-loading,
+.dvids-news .dvids-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-muted, #666);
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .dvids-news ul {
+    grid-template-columns: 1fr;
+  }
+
+  .dvids-news .dvids-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
