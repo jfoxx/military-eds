@@ -210,13 +210,27 @@ async function onSelectArticle(item, card) {
     const article = data.results;
     if (!article) throw new Error('No article data returned');
     
-    // Try to get full-resolution image if we have an image asset ID
+    // Try to get full-resolution image
     let fullImageUrl = null;
-    const imageId = item.image_id || item.photo_id || article.image_id || article.photo_id;
+    
+    // First check for explicit image ID fields
+    let imageId = item.image_id || item.photo_id || article.image_id || article.photo_id;
+    
+    // If no explicit ID, try to extract from thumbnail URL
+    // Thumbnail URLs look like: https://d1ldvf68ux039x.cloudfront.net/thumbs/photos/2512/9437429/122x92_q95.jpg
+    // The asset ID is in the path: /thumbs/photos/YYMM/ASSET_ID/filename.jpg
+    if (!imageId && item.thumbnail) {
+      const thumbMatch = item.thumbnail.match(/\/thumbs\/(?:photos|videos)\/\d+\/(\d+)\//);
+      if (thumbMatch) {
+        imageId = thumbMatch[1];
+        console.log('[IMAGE] Extracted asset ID from thumbnail URL:', imageId);
+      }
+    }
     
     if (imageId) {
       // Fetch the full image from asset API (like dvids-popover.js does)
       console.log('[IMAGE] Fetching full image asset:', imageId);
+      setStatus('Fetching full-resolution image…');
       try {
         const imageAssetUrl = `${API_BASE_ASSET}?id=${encodeURIComponent(imageId)}&api_key=${API_KEY}`;
         const imgRes = await fetch(imageAssetUrl, { headers: { Accept: 'application/json' } });
@@ -236,7 +250,7 @@ async function onSelectArticle(item, card) {
       console.log('[IMAGE] Using full-resolution image');
     } else if (!article.image && item.thumbnail) {
       article.image = item.thumbnail;
-      console.log('[IMAGE] Using thumbnail from search result:', item.thumbnail);
+      console.log('[IMAGE] Falling back to thumbnail:', item.thumbnail);
     }
     
     console.log('[ARTICLE WITH IMAGE]', {
