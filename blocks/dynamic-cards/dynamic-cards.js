@@ -46,38 +46,38 @@ function createArticleCard(article) {
  */
 function createImageCard(article, size = 'small') {
   const card = document.createElement('article');
-  card.classList.add('image-card', `image-card--${size}`);
+  card.classList.add('tile', `tile-${size}`);
 
   // Background image container
   const imageContainer = document.createElement('div');
-  imageContainer.classList.add('image-card__background');
+  imageContainer.classList.add('tile-background');
   imageContainer.innerHTML = buildArticleImage(article.image, article.title, size === 'large');
 
   // Gradient overlay
   const overlay = document.createElement('div');
-  overlay.classList.add('image-card__overlay');
+  overlay.classList.add('tile-overlay');
 
   // Content container
   const content = document.createElement('div');
-  content.classList.add('image-card__content');
+  content.classList.add('tile-content');
 
   // Title
   const title = document.createElement('h3');
-  title.classList.add('image-card__title');
+  title.classList.add('tile-title');
   title.textContent = article.title;
   content.appendChild(title);
 
   // Description (only for large and medium cards)
   if (size === 'large' || size === 'medium') {
     const description = document.createElement('p');
-    description.classList.add('image-card__description');
+    description.classList.add('tile-description');
     description.textContent = article.description || '';
     content.appendChild(description);
   }
 
   // Read More button (USWDS styled)
   const linkContainer = document.createElement('div');
-  linkContainer.classList.add('image-card__link');
+  linkContainer.classList.add('tile-link');
   const link = document.createElement('a');
   link.href = article.path;
   link.classList.add('usa-button');
@@ -167,7 +167,7 @@ function renderDefaultLayout(block, articles) {
  */
 function renderImageLayout(block, articles) {
   const grid = document.createElement('div');
-  grid.classList.add('image-cards__grid');
+  grid.classList.add('tiles-grid');
 
   articles.forEach((article, index) => {
     const size = getCardSize(index);
