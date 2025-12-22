@@ -16,7 +16,7 @@ import {
   loadBlock,
 } from './aem.js';
 
-import decorateArticle from '../templates/article/article.js';
+//import decorateArticle from '../templates/article/article.js';
 
 /**
  * Set template (page structure) and theme (page styles).
@@ -31,11 +31,11 @@ function decorateTemplateAndTheme() {
   if (template) addClasses(document.body, template);
   const theme = getMetadata('theme');
   if (theme) addClasses(document.body, theme);
-  if (template === 'article') {
-    const main = document.querySelector('main');
-    decorateArticle(main);
-    loadCSS(`${window.hlx.codeBasePath}/templates/article/article.css`);
-  }
+ // if (template === 'article') {
+  //  const main = document.querySelector('main');
+  //  decorateArticle(main);
+  //  loadCSS(`${window.hlx.codeBasePath}/templates/article/article.css`);
+ // }
 }
 
 /**
