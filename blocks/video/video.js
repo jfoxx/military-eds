@@ -230,7 +230,7 @@ export default async function decorate(block) {
     // Match URLs that look like video links
     const urlMatch = textContent.match(/https?:\/\/[^\s]+/);
     if (urlMatch) {
-      link = urlMatch[0];
+      [link] = urlMatch;
     }
   }
 
