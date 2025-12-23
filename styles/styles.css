@@ -237,6 +237,7 @@ a:hover {
 }
 
 /* buttons - Using USWDS styles (imported above) */
+
 /* Override USWDS button text color to use theme variable */
 .usa-button {
   color: var(--button-text-color, #fff);
@@ -247,13 +248,11 @@ a:hover {
   color: var(--button-text-color, #fff);
 }
 
-.usa-button:hover,
-.usa-button.usa-button--hover {
+.usa-button:hover {
   color: var(--button-text-color, #fff);
 }
 
-.usa-button:active,
-.usa-button.usa-button--active {
+.usa-button:active {
   color: var(--button-text-color, #fff);
 }
 
