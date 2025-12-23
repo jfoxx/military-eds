@@ -29,6 +29,7 @@ const SA11Y_LANG_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VER
 const SA11Y_JS_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/js/sa11y.umd.min.js`;
 
 let sa11yActive = false;
+let sa11yLoaded = false;
 
 function injectCSS(url, id) {
   return new Promise((resolve, reject) => {
@@ -55,28 +56,36 @@ function injectScript(url, id) {
   });
 }
 
+async function loadSa11y() {
+  if (sa11yLoaded) return;
+
+  await injectCSS(SA11Y_CSS_URL, 'sa11y-injected-styles');
+  await injectScript(SA11Y_LANG_URL, 'sa11y-lang-script');
+  await new Promise((r) => { setTimeout(r, 100); });
+  await injectScript(SA11Y_JS_URL, 'sa11y-main-script');
+
+  // Wait for Sa11y to be available
+  await new Promise((resolve, reject) => {
+    let attempts = 0;
+    const check = () => {
+      attempts += 1;
+      if (window.Sa11y && window.Sa11yLangEn) resolve();
+      else if (attempts > 50) reject(new Error('Sa11y load timeout'));
+      else setTimeout(check, 100);
+    };
+    check();
+  });
+
+  window.Sa11y.Lang.addI18n(window.Sa11yLangEn.strings);
+  sa11yLoaded = true;
+}
+
 async function startSa11y() {
-  if (sa11yActive) return; // Prevent double-start
+  if (sa11yActive) return;
 
   try {
-    await injectCSS(SA11Y_CSS_URL, 'sa11y-injected-styles');
-    await injectScript(SA11Y_LANG_URL, 'sa11y-lang-script');
-    await new Promise((r) => { setTimeout(r, 100); });
-    await injectScript(SA11Y_JS_URL, 'sa11y-main-script');
+    await loadSa11y();
 
-    // Wait for Sa11y to be available
-    await new Promise((resolve, reject) => {
-      let attempts = 0;
-      const check = () => {
-        attempts += 1;
-        if (window.Sa11y && window.Sa11yLangEn) resolve();
-        else if (attempts > 50) reject(new Error('Sa11y load timeout'));
-        else setTimeout(check, 100);
-      };
-      check();
-    });
-
-    window.Sa11y.Lang.addI18n(window.Sa11yLangEn.strings);
     window.sa11yInstance = new window.Sa11y.Sa11y({
       checkRoot: 'main, [role="main"], .main-content, body',
       containerIgnore: '.sidekick-library, .hlx-sk, #hlx-sk, [data-aue-type], .aue-edit',
@@ -96,7 +105,7 @@ async function startSa11y() {
 }
 
 function stopSa11y() {
-  if (!sa11yActive) return; // Already stopped
+  if (!sa11yActive) return;
 
   try {
     if (window.sa11yInstance) {
@@ -104,11 +113,10 @@ function stopSa11y() {
       delete window.sa11yInstance;
     }
 
-    // Remove all Sa11y elements (by ID selector)
+    // Remove Sa11y UI elements (keep scripts/styles loaded for re-use)
     [
-      '#sa11y-injected-styles', '#sa11y-lang-script', '#sa11y-main-script',
       '#sa11y-container', '#sa11y-panel', '#sa11y-toast-container',
-      '#sa11y-control-panel', '[id^="sa11y"]', '.sa11y-annotation', '.sa11y-instance',
+      '#sa11y-control-panel', '.sa11y-annotation', '.sa11y-instance',
     ].forEach((sel) => {
       document.querySelectorAll(sel).forEach((el) => {
         try { el.remove(); } catch (e) { /* ignore */ }
@@ -124,9 +132,6 @@ function stopSa11y() {
         try { el.remove(); } catch (e) { /* ignore */ }
       });
     });
-
-    delete window.Sa11y;
-    delete window.Sa11yLangEn;
 
     sa11yActive = false;
     // eslint-disable-next-line no-console
