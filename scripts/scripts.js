@@ -19,6 +19,131 @@ import {
 import decorateArticle from '../templates/article/article.js';
 
 /**
+ * Sa11y Accessibility Checker - Sidekick Toggle Plugin
+ * Injects/removes Sa11y when the Accessibility button is clicked.
+ * https://sa11y.netlify.app/
+ */
+const SA11Y_VERSION = '4';
+const SA11Y_CSS_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/css/sa11y.min.css`;
+const SA11Y_LANG_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/js/lang/en.umd.js`;
+const SA11Y_JS_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/js/sa11y.umd.min.js`;
+
+function isSa11yLoaded() {
+  return document.getElementById('sa11y-injected-styles') !== null;
+}
+
+function injectCSS(url, id) {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById(id)) { resolve(); return; }
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = url;
+    link.onload = resolve;
+    link.onerror = () => reject(new Error('Failed to load Sa11y CSS'));
+    document.head.appendChild(link);
+  });
+}
+
+function injectScript(url, id) {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById(id)) { resolve(); return; }
+    const script = document.createElement('script');
+    script.id = id;
+    script.src = url;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('Failed to load Sa11y script'));
+    document.head.appendChild(script);
+  });
+}
+
+async function startSa11y() {
+  try {
+    await injectCSS(SA11Y_CSS_URL, 'sa11y-injected-styles');
+    await injectScript(SA11Y_LANG_URL, 'sa11y-lang-script');
+    await new Promise((r) => { setTimeout(r, 100); });
+    await injectScript(SA11Y_JS_URL, 'sa11y-main-script');
+
+    // Wait for Sa11y to be available
+    await new Promise((resolve, reject) => {
+      let attempts = 0;
+      const check = () => {
+        attempts += 1;
+        if (window.Sa11y && window.Sa11yLangEn) resolve();
+        else if (attempts > 50) reject(new Error('Sa11y load timeout'));
+        else setTimeout(check, 100);
+      };
+      check();
+    });
+
+    window.Sa11y.Lang.addI18n(window.Sa11yLangEn.strings);
+    window.sa11yInstance = new window.Sa11y.Sa11y({
+      checkRoot: 'main, [role="main"], .main-content, body',
+      containerIgnore: '.sidekick-library, .hlx-sk, #hlx-sk, [data-aue-type], .aue-edit',
+      showGoodLinkButton: true,
+      showHinPageOutline: true,
+      detectPageLanguage: true,
+      panelPosition: 'left',
+    });
+
+    // eslint-disable-next-line no-console
+    console.log('[Sa11y] Started');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[Sa11y] Error starting:', error);
+  }
+}
+
+function stopSa11y() {
+  try {
+    if (window.sa11yInstance) {
+      try { window.sa11yInstance.destroy(); } catch (e) { /* ignore */ }
+      delete window.sa11yInstance;
+    }
+
+    // Remove all Sa11y elements
+    [
+      '#sa11y-injected-styles', '#sa11y-lang-script', '#sa11y-main-script',
+      '#sa11y-container', '#sa11y-panel', '#sa11y-toast-container',
+      '#sa11y-control-panel', '[id^="sa11y"]', '.sa11y-annotation', '.sa11y-instance',
+    ].forEach((sel) => {
+      document.querySelectorAll(sel).forEach((el) => { try { el.remove(); } catch (e) { /* ignore */ } });
+    });
+
+    delete window.Sa11y;
+    delete window.Sa11yLangEn;
+
+    // eslint-disable-next-line no-console
+    console.log('[Sa11y] Stopped');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[Sa11y] Error stopping:', error);
+  }
+}
+
+function toggleSa11y() {
+  if (isSa11yLoaded()) {
+    stopSa11y();
+  } else {
+    startSa11y();
+  }
+}
+
+// Listen for sidekick sa11y event
+function initSa11ySidekick() {
+  const sk = document.querySelector('aem-sidekick');
+  if (sk) {
+    sk.addEventListener('custom:sa11y', toggleSa11y);
+  } else {
+    document.addEventListener('sidekick-ready', () => {
+      document.querySelector('aem-sidekick')?.addEventListener('custom:sa11y', toggleSa11y);
+    }, { once: true });
+  }
+}
+
+initSa11ySidekick();
+
+/**
  * Set template (page structure) and theme (page styles).
  */
 function decorateTemplateAndTheme() {
