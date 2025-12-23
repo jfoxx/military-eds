@@ -238,13 +238,23 @@ a:hover {
 
 /* buttons - Using USWDS styles (imported above) */
 
-/* The USWDS .usa-button class provides the base button styling */
+/* Override USWDS button text color to use theme variable */
+.usa-button {
+  color: var(--button-text-color, #fff);
+  background-color: var(--accent-color);
+}
 
-/* EDS auto-applies .button class to links, so we map it to USWDS styles */
+.usa-button:visited {
+  color: var(--button-text-color, #fff);
+}
 
-/* Note: In your block JavaScript, add 'usa-button' class to buttons */
+.usa-button:hover {
+  color: var(--button-text-color, #fff);
+}
 
-/* Example: button.classList.add('usa-button'); */
+.usa-button:active {
+  color: var(--button-text-color, #fff);
+}
 
 main img {
   max-width: 100%;
