@@ -28,9 +28,7 @@ const SA11Y_CSS_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERS
 const SA11Y_LANG_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/js/lang/en.umd.js`;
 const SA11Y_JS_URL = `https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@${SA11Y_VERSION}/dist/js/sa11y.umd.min.js`;
 
-function isSa11yLoaded() {
-  return document.getElementById('sa11y-injected-styles') !== null;
-}
+let sa11yActive = false;
 
 function injectCSS(url, id) {
   return new Promise((resolve, reject) => {
@@ -58,6 +56,8 @@ function injectScript(url, id) {
 }
 
 async function startSa11y() {
+  if (sa11yActive) return; // Prevent double-start
+
   try {
     await injectCSS(SA11Y_CSS_URL, 'sa11y-injected-styles');
     await injectScript(SA11Y_LANG_URL, 'sa11y-lang-script');
@@ -86,6 +86,7 @@ async function startSa11y() {
       panelPosition: 'left',
     });
 
+    sa11yActive = true;
     // eslint-disable-next-line no-console
     console.log('[Sa11y] Started');
   } catch (error) {
@@ -95,6 +96,8 @@ async function startSa11y() {
 }
 
 function stopSa11y() {
+  if (!sa11yActive) return; // Already stopped
+
   try {
     if (window.sa11yInstance) {
       try { window.sa11yInstance.destroy(); } catch (e) { /* ignore */ }
@@ -113,6 +116,7 @@ function stopSa11y() {
     delete window.Sa11y;
     delete window.Sa11yLangEn;
 
+    sa11yActive = false;
     // eslint-disable-next-line no-console
     console.log('[Sa11y] Stopped');
   } catch (error) {
@@ -122,7 +126,7 @@ function stopSa11y() {
 }
 
 function toggleSa11y() {
-  if (isSa11yLoaded()) {
+  if (sa11yActive) {
     stopSa11y();
   } else {
     startSa11y();
