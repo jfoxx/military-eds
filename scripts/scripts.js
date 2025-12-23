@@ -30,7 +30,7 @@ function decorateButtonGroups(element) {
       // Verify links are direct children or wrapped in strong/em
       const validLinks = [...links].filter((a) => {
         const parent = a.parentElement;
-        return parent === p || (parent.tagName === 'STRONG' || parent.tagName === 'EM') && parent.parentElement === p;
+        return parent === p || ((parent.tagName === 'STRONG' || parent.tagName === 'EM') && parent.parentElement === p);
       });
 
       if (validLinks.length > 1) {

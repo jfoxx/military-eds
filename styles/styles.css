@@ -266,6 +266,7 @@ a.usa-button:active {
 }
 
 /* Secondary/Outline button styles */
+/* stylelint-disable selector-class-pattern */
 .usa-button--outline,
 a.usa-button--outline:any-link {
   background-color: transparent;
@@ -293,6 +294,7 @@ a.usa-button--outline:active {
   color: var(--accent-color);
   filter: brightness(0.7);
 }
+/* stylelint-enable selector-class-pattern */
 
 /* Button group - multiple buttons side by side */
 .button-group {

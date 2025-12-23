@@ -103,15 +103,16 @@ function embedDvids(url, autoplay) {
   // Extract video ID from pathname
   // Formats: /video/123456/title or /video/embed/123456
   const pathParts = url.pathname.split('/').filter(Boolean);
+  const [first, second, third] = pathParts;
   let videoId = '';
 
-  if (pathParts[0] === 'video') {
-    if (pathParts[1] === 'embed') {
+  if (first === 'video') {
+    if (second === 'embed') {
       // /video/embed/123456
-      videoId = pathParts[2];
+      videoId = third;
     } else {
       // /video/123456 or /video/123456/title
-      videoId = pathParts[1];
+      videoId = second;
     }
   }
 
@@ -240,4 +241,3 @@ export default async function decorate(block) {
     observer.observe(block);
   }
 }
-
