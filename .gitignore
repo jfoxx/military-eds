@@ -17,7 +17,7 @@ styles/uswds-utilities.css.map
 # USWDS buttons and blocks CSS are PRE-COMPILED and COMMITTED
 # (EDS doesn't compile SCSS, so these must be in the repo)
 # styles/uswds-buttons.css ← COMMITTED
-# blocks/card/card.css ← COMMITTED  
+# blocks/card/card.css ← COMMITTED
 # blocks/grid/grid.css ← COMMITTED
 
 # Source maps can be ignored
@@ -25,3 +25,4 @@ styles/uswds-utilities.css.map
 
 .sass-cache/
 SIDEKICK-LIBRARY-CROSS-SITE-SETUP.md
+.env
