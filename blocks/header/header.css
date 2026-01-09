@@ -160,8 +160,9 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 300px;
+  width: auto;
   height: auto;
+  max-height: 116;
 }
 
 /* Adjust logo size on mobile */
@@ -498,4 +499,55 @@ body.marines header .nav-brand a {
   font-family: var(--marines-heading-font);
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+/* ==========================================================================
+   AIR FORCE THEME HEADER/NAV STYLES
+   ========================================================================== */
+
+/* Air Force nav brand area - logo and tagline */
+body.airforce header .nav-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* Air Force tagline styling - text after the logo */
+body.airforce header .nav-brand p {
+  font-family: var(--airforce-display-font);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--header-text-color, #1c2347);
+  margin: 0;
+  line-height: 1.2;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+/* If tagline is on same line as logo (using soft break) */
+body.airforce header .nav-brand a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-decoration: none;
+}
+
+/* Desktop adjustments */
+@media (width >= 900px) {
+  body.airforce header .nav-brand p {
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+}
+
+/* Hide tagline on very small screens if needed */
+@media (width < 480px) {
+  body.airforce header .nav-brand p:not(:has(picture)) {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
 }

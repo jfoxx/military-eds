@@ -94,8 +94,10 @@ body.airforce {
   --accent-color-dark: #11375c;
   --link-color: #1c2347;
   --link-hover-color: #11375c;
-  --header-background-color: #1c2347;
-  --header-text-color: #fff;
+  --header-background-color: #fff;
+  --header-text-color: #1c2347;
+  --footer-background-color: #fff;
+  --footer-text-color: #1c2347;
   --background-dark: #1c2347;
   --color-foreground-dark: #fff;
   --button-text-color: #fff;
@@ -113,8 +115,10 @@ body.airforce.aetc-2af {
   --accent-color-dark: #11375c;
   --link-color: #1c2347;
   --link-hover-color: #11375c;
-  --header-background-color: #15263b;
-  --header-text-color: #fff;
+  --header-background-color: #fff;
+  --header-text-color: #15263b;
+  --footer-background-color: #fff;
+  --footer-text-color: #15263b;
   --background-dark: #1c2347;
   --color-foreground-dark: #fff;
   --button-text-color: #fff;
@@ -133,6 +137,8 @@ body.marines {
   --link-hover-color: #720000;
   --header-background-color: #000;
   --header-text-color: #fff;
+  --footer-background-color: #000;
+  --footer-text-color: #fff;
   --background-dark: #1a1a1a;
   --color-foreground-dark: #fff;
   --button-text-color: #fff;
@@ -426,7 +432,7 @@ main img {
 }
 
 /* sections */
-main > .section {
+main > .section:not(:empty) {
   margin: 40px 0;
 }
 

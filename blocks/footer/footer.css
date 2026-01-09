@@ -1,6 +1,7 @@
 footer {
-  background-color: var(--background-dark, #202020);
-  color: var(--color-foreground-dark, #fff);
+  background-color: var(--footer-background-color, #202020);
+  color: var(--footer-text-color, #fff);
+  border-top: 10px solid var(--accent-color, #202020);
 }
 
 footer .footer {
