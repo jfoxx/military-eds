@@ -1,66 +1,94 @@
 /*
  * USWDS Theme Custom Styles
- * 
+ *
  * This file contains custom styles and overrides that build on top of USWDS.
- * Add your custom CSS here that extends or overrides USWDS components.
+ * These styles use CSS custom properties defined in styles/styles.css for theming.
+ *
+ * The theme variables are defined in styles.css and include:
+ * - --accent-color, --accent-color-light, --accent-color-dark
+ * - --link-color, --link-hover-color
+ * - --header-background-color, --header-text-color
+ * - --background-dark, --color-foreground-dark
+ * - --button-text-color, --border-color
  */
 
 // ===========================================
-// Custom Theme Overrides for DoD Branches
+// USWDS Component Overrides for Theme Support
 // ===========================================
 
-// These custom classes can be applied to body to theme the site
-// for different military branches
+// Buttons - Override USWDS hardcoded colors with theme variables
+.usa-button {
+  background-color: var(--accent-color);
+  color: var(--button-text-color, #fff);
+  border-radius: 2.4em; // Match existing rounded style
 
-body.army {
-  --usa-primary-color: #fc0;
-  --usa-link-color: #1c2226;
+  &:visited {
+    color: var(--button-text-color, #fff);
+  }
+
+  &:hover,
+  &.usa-button--hover {
+    background-color: var(--accent-color-dark, var(--accent-color));
+    color: var(--button-text-color, #fff);
+  }
+
+  &:active,
+  &.usa-button--active {
+    background-color: var(--accent-color-dark, var(--accent-color));
+    color: var(--button-text-color, #fff);
+  }
+
+  &:focus:not([disabled]) {
+    outline-color: var(--accent-color);
+  }
 }
 
-body.navy {
-  --usa-primary-color: #00283C;
-  --usa-link-color: #1a5eab;
-  --usa-background-dark: #00283C;
+// Outline button variant
+.usa-button--outline {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--accent-color);
+  color: var(--accent-color);
+
+  &:visited {
+    color: var(--accent-color);
+  }
+
+  &:hover,
+  &.usa-button--hover {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 2px var(--accent-color-dark, var(--accent-color));
+    color: var(--accent-color-dark, var(--accent-color));
+  }
+
+  &:active,
+  &.usa-button--active {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 2px var(--accent-color-dark, var(--accent-color));
+    color: var(--accent-color-dark, var(--accent-color));
+  }
 }
 
-body.airforce {
-  --usa-primary-color: #1c2347;
-  --usa-link-color: #1a5eab;
-  --usa-background-dark: #1c2347;
-}
+// Links - Override USWDS link colors
+.usa-link,
+a {
+  color: var(--link-color);
 
-body.marines {
-  --usa-primary-color: #e41b17;
-  --usa-link-color: #a71930;
-  --usa-background-dark: #171717;
-}
+  &:visited {
+    color: var(--link-color);
+  }
 
-body.coastguard {
-  --usa-primary-color: #007dc3;
-  --usa-link-color: #005f86;
-  --usa-background-dark: #013043;
-}
-
-body.spaceforce {
-  --usa-primary-color: #000;
-  --usa-link-color: #1a5eab;
-  --usa-background-dark: #000;
-}
-
-body.dod {
-  --usa-primary-color: #355e93;
-  --usa-link-color: #2020E0;
-  --usa-background-dark: #1c1c1c;
+  &:hover {
+    color: var(--link-hover-color, var(--link-color));
+  }
 }
 
 // ===========================================
-// Custom Component Extensions
+// Heading Accent Bar (Military branch styling)
 // ===========================================
 
-// Ensure headings have the accent bar from your existing design
 h1, h2, h3, h4, h5, h6 {
   &::after {
-    background-color: var(--usa-primary-color, var(--accent-color));
+    background-color: var(--accent-color);
     content: "";
     display: block;
     height: 4px;
@@ -70,12 +98,238 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-// Ensure buttons match your existing rounded style
-.usa-button {
-  border-radius: 2.4em;
+// ===========================================
+// USWDS Banner Component
+// ===========================================
+
+.usa-banner {
+  background-color: var(--light-color, #f0f0f0);
 }
 
-// Custom icon styles to maintain compatibility
+.usa-banner__button {
+  color: var(--link-color);
+
+  &:hover {
+    color: var(--link-hover-color, var(--link-color));
+  }
+}
+
+// ===========================================
+// USWDS Card Component
+// ===========================================
+
+.usa-card__container {
+  border-color: var(--border-color, #dcdcdc);
+}
+
+.usa-card__header {
+  a {
+    color: var(--link-color);
+
+    &:hover {
+      color: var(--link-hover-color, var(--link-color));
+    }
+  }
+}
+
+// ===========================================
+// USWDS Footer Component
+// ===========================================
+
+.usa-footer {
+  background-color: var(--background-dark, #1b1b1b);
+  color: var(--color-foreground-dark, #fff);
+
+  a {
+    color: var(--color-foreground-dark, #fff);
+
+    &:hover {
+      color: var(--color-foreground-dark, #fff);
+      opacity: 0.8;
+    }
+  }
+}
+
+.usa-footer__primary-section {
+  background-color: var(--background-dark, #1b1b1b);
+}
+
+.usa-footer__secondary-section {
+  background-color: var(--background-dark, #1b1b1b);
+}
+
+// ===========================================
+// USWDS Identifier Component
+// ===========================================
+
+.usa-identifier {
+  background-color: var(--background-dark, #1b1b1b);
+  color: var(--color-foreground-dark, #fff);
+}
+
+// ===========================================
+// USWDS Breadcrumb Component
+// ===========================================
+
+.usa-breadcrumb__link {
+  color: var(--link-color);
+
+  &:hover {
+    color: var(--link-hover-color, var(--link-color));
+  }
+
+  &:visited {
+    color: var(--link-color);
+  }
+}
+
+// ===========================================
+// USWDS Alert Component
+// ===========================================
+
+.usa-alert--info {
+  border-left-color: var(--accent-color);
+
+  .usa-alert__heading {
+    color: var(--accent-color-dark, var(--accent-color));
+  }
+}
+
+// ===========================================
+// USWDS Accordion Component
+// ===========================================
+
+.usa-accordion__button {
+  background-color: var(--light-color, #f0f0f0);
+
+  &:hover {
+    background-color: var(--light-color, #e0e0e0);
+  }
+
+  &[aria-expanded="true"] {
+    background-color: var(--accent-color);
+    color: var(--button-text-color, #fff);
+  }
+}
+
+// ===========================================
+// USWDS Step Indicator Component
+// ===========================================
+
+.usa-step-indicator__segment--complete {
+  background-color: var(--accent-color);
+}
+
+.usa-step-indicator__segment--current {
+  background-color: var(--accent-color);
+}
+
+// ===========================================
+// USWDS Tag Component
+// ===========================================
+
+.usa-tag {
+  background-color: var(--accent-color);
+  color: var(--button-text-color, #fff);
+}
+
+// ===========================================
+// USWDS Table Component
+// ===========================================
+
+.usa-table {
+  th {
+    background-color: var(--background-dark, #1b1b1b);
+    color: var(--color-foreground-dark, #fff);
+  }
+
+  a {
+    color: var(--link-color);
+
+    &:hover {
+      color: var(--link-hover-color, var(--link-color));
+    }
+  }
+}
+
+.usa-table--striped {
+  tbody tr:nth-child(odd) {
+    background-color: var(--light-color, #f0f0f0);
+  }
+}
+
+// ===========================================
+// USWDS Pagination Component
+// ===========================================
+
+.usa-pagination__button {
+  color: var(--link-color);
+
+  &:hover {
+    color: var(--link-hover-color, var(--link-color));
+  }
+}
+
+.usa-pagination__button.usa-current {
+  background-color: var(--accent-color);
+  color: var(--button-text-color, #fff);
+}
+
+// ===========================================
+// USWDS Process List Component
+// ===========================================
+
+.usa-process-list__item::before {
+  background-color: var(--accent-color);
+  color: var(--button-text-color, #fff);
+}
+
+// ===========================================
+// USWDS Side Navigation Component
+// ===========================================
+
+.usa-sidenav__item {
+  a {
+    color: var(--link-color);
+
+    &:hover {
+      background-color: var(--light-color, #f0f0f0);
+      color: var(--link-hover-color, var(--link-color));
+    }
+  }
+
+  .usa-current {
+    border-left-color: var(--accent-color);
+    color: var(--accent-color);
+
+    &::after {
+      background-color: var(--accent-color);
+    }
+  }
+}
+
+// ===========================================
+// USWDS Form Elements
+// ===========================================
+
+.usa-input:focus,
+.usa-textarea:focus,
+.usa-select:focus {
+  outline-color: var(--accent-color);
+}
+
+.usa-checkbox__input:checked + .usa-checkbox__label::before {
+  background-color: var(--accent-color);
+}
+
+.usa-radio__input:checked + .usa-radio__label::before {
+  background-color: var(--accent-color);
+}
+
+// ===========================================
+// Custom Icon Styles
+// ===========================================
+
 .icon {
   display: inline-block;
   height: 24px;
@@ -92,17 +346,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // ===========================================
-// AEM Edge Delivery Specific Overrides
+// AEM Edge Delivery Section Overrides
 // ===========================================
 
-// Ensure sections work with USWDS
 main > .section {
-  // Note: If you're using utilities-only build, grid-container won't be available
-  // @extend .grid-container !optional;
   margin: 40px auto;
 
   > div {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: auto;
     padding: 0 24px;
   }
@@ -118,11 +369,224 @@ main > .section:first-of-type {
   }
 }
 
-// Section metadata compatibility
+// Section metadata - highlight/light sections
 main .section.light,
 main .section.highlight {
-  background-color: var(--usa-base-lightest);
+  background-color: var(--light-color, #f0f0f0);
   margin: 0;
   padding: 40px 0;
 }
 
+// Dark section variant
+main .section.dark {
+  background-color: var(--background-dark, #1b1b1b);
+  color: var(--color-foreground-dark, #fff);
+  margin: 0;
+  padding: 40px 0;
+
+  a {
+    color: var(--color-foreground-dark, #fff);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-foreground-dark, #fff);
+
+    &::after {
+      background-color: var(--accent-color);
+    }
+  }
+}
+
+// ===========================================
+// MARINES THEME SPECIFIC OVERRIDES
+// ===========================================
+
+body.marines {
+  // Marines buttons - scarlet with gold hover
+  .usa-button {
+    background-color: var(--marines-scarlet, #940000);
+    color: #fff;
+    font-family: var(--marines-heading-font);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover,
+    &.usa-button--hover {
+      background-color: var(--marines-gold, #c5a900);
+      color: #000;
+    }
+
+    &:active,
+    &.usa-button--active {
+      background-color: darken(#c5a900, 10%);
+      color: #000;
+    }
+  }
+
+  // Marines outline button
+  .usa-button--outline {
+    box-shadow: inset 0 0 0 2px var(--marines-scarlet, #940000);
+    color: var(--marines-scarlet, #940000);
+
+    &:hover,
+    &.usa-button--hover {
+      box-shadow: inset 0 0 0 2px var(--marines-gold, #c5a900);
+      color: var(--marines-gold, #c5a900);
+      background-color: transparent;
+    }
+  }
+
+  // Marines headings with Oswald font
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--marines-heading-font);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    &::after {
+      background-color: var(--marines-scarlet, #940000);
+      width: 80px;
+    }
+  }
+
+  // Marines card styling
+  .usa-card__container {
+    border-color: var(--marines-scarlet, #940000);
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .usa-card__header h2,
+  .usa-card__header h3 {
+    font-family: var(--marines-heading-font);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  // Marines footer with gold accents
+  .usa-footer {
+    background-color: var(--marines-black, #000);
+
+    a:hover {
+      color: var(--marines-gold, #c5a900);
+      opacity: 1;
+    }
+  }
+
+  // Marines accordion
+  .usa-accordion__button {
+    font-family: var(--marines-heading-font);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &[aria-expanded="true"] {
+      background-color: var(--marines-scarlet, #940000);
+    }
+  }
+
+  // Marines tag
+  .usa-tag {
+    background-color: var(--marines-scarlet, #940000);
+    font-family: var(--marines-heading-font);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  // Marines table
+  .usa-table th {
+    background-color: var(--marines-black, #000);
+  }
+
+  // Marines pagination
+  .usa-pagination__button.usa-current {
+    background-color: var(--marines-scarlet, #940000);
+  }
+
+  // Marines process list
+  .usa-process-list__item::before {
+    background-color: var(--marines-scarlet, #940000);
+  }
+
+  // Marines step indicator
+  .usa-step-indicator__segment--complete,
+  .usa-step-indicator__segment--current {
+    background-color: var(--marines-scarlet, #940000);
+  }
+
+  // Marines side navigation
+  .usa-sidenav__item {
+    .usa-current {
+      border-left-color: var(--marines-scarlet, #940000);
+      color: var(--marines-scarlet, #940000);
+    }
+  }
+
+  // Marines dark sections with gold headings
+  .section.dark {
+    background-color: var(--marines-dark-gray, #1a1a1a);
+
+    h1, h2, h3 {
+      color: var(--marines-gold, #c5a900);
+
+      &::after {
+        background-color: var(--marines-gold, #c5a900);
+      }
+    }
+
+    a {
+      color: var(--marines-gold, #c5a900);
+
+      &:hover {
+        color: lighten(#c5a900, 15%);
+      }
+    }
+  }
+
+  // Marines black sections
+  .section.black {
+    background-color: var(--marines-black, #000);
+    color: #fff;
+    margin: 0;
+    padding: 60px 0;
+
+    h1, h2, h3 {
+      color: var(--marines-gold, #c5a900);
+
+      &::after {
+        background-color: var(--marines-gold, #c5a900);
+      }
+    }
+  }
+
+  // Marines alert styling
+  .usa-alert--info {
+    border-left-color: var(--marines-scarlet, #940000);
+
+    .usa-alert__heading {
+      color: var(--marines-scarlet, #940000);
+      font-family: var(--marines-heading-font);
+      text-transform: uppercase;
+    }
+  }
+
+  // Marines form focus states
+  .usa-input:focus,
+  .usa-textarea:focus,
+  .usa-select:focus {
+    outline-color: var(--marines-scarlet, #940000);
+  }
+
+  .usa-checkbox__input:checked + .usa-checkbox__label::before,
+  .usa-radio__input:checked + .usa-radio__label::before {
+    background-color: var(--marines-scarlet, #940000);
+  }
+}

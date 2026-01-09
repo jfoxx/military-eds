@@ -84,3 +84,202 @@
     font-size: 44px;
   }
 }
+
+/* ==========================================================================
+   MARINES FULLSCREEN HERO VARIANT
+   - Full viewport height image
+   - Extends behind transparent navigation
+   - Simple, no carousel
+
+   DOM Structure:
+   .section.hero-container
+     .hero-wrapper
+       .hero.fullscreen.block
+         > div (content wrapper with AOS)
+           > div (inner content)
+             h1
+             p > picture > img (hero image)
+   ========================================================================== */
+
+/* Hero container - remove margins */
+body.marines .section.hero-container {
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero wrapper - full width, no border */
+body.marines .hero-container .hero-wrapper {
+  max-width: unset;
+  padding: 0;
+  border-bottom: none;
+}
+
+/* Main hero block - fullscreen */
+body.marines .hero.fullscreen {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 500px;
+  margin-top: calc(var(--nav-height) * -1);
+  padding: 0;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* Dark gradient overlay - for text readability */
+body.marines .hero.fullscreen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.3) 30%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Content wrapper (first div inside hero) - centers content */
+body.marines .hero.fullscreen > div {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--nav-height);
+}
+
+/* Inner content div */
+body.marines .hero.fullscreen > div > div {
+  text-align: center;
+  max-width: 900px;
+  padding: 40px 24px;
+  z-index: 5;
+}
+
+/* Accent bar above title */
+body.marines .hero.fullscreen > div > div::before {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--marines-scarlet);
+  margin: 0 auto 24px;
+}
+
+/* Heading */
+body.marines .hero.fullscreen h1 {
+  font-family: var(--marines-heading-font);
+  color: #fff;
+  font-size: 32px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 16px;
+  max-width: none;
+}
+
+body.marines .hero.fullscreen h1::after {
+  display: none;
+}
+
+/* The paragraph containing the picture - position absolutely on the hero block */
+body.marines .hero.fullscreen p:has(picture) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  z-index: -1;
+  max-width: none;
+}
+
+/* Picture element - fill parent */
+body.marines .hero.fullscreen picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Remove any default picture pseudo-element */
+body.marines .hero.fullscreen picture::before {
+  display: none;
+}
+
+/* Image - cover the entire hero area */
+body.marines .hero.fullscreen img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Text paragraphs (not the one with picture) */
+body.marines .hero.fullscreen > div > div > p:not(:has(picture)) {
+  color: rgb(255 255 255 / 85%);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  max-width: 550px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+}
+
+/* Buttons */
+body.marines .hero.fullscreen .button,
+body.marines .hero.fullscreen .usa-button {
+  margin-top: 24px;
+  background-color: var(--marines-scarlet);
+  border-color: var(--marines-scarlet);
+  position: relative;
+  z-index: 5;
+}
+
+body.marines .hero.fullscreen .button:hover,
+body.marines .hero.fullscreen .usa-button:hover {
+  background-color: var(--marines-gold);
+  border-color: var(--marines-gold);
+  color: #000;
+}
+
+/* Desktop */
+@media (width >= 900px) {
+  body.marines .hero.fullscreen > div > div {
+    padding: 60px 32px;
+  }
+
+  body.marines .hero.fullscreen > div > div::before {
+    width: 100px;
+    margin-bottom: 32px;
+  }
+
+  body.marines .hero.fullscreen h1 {
+    font-size: 48px;
+    letter-spacing: 3px;
+  }
+
+  body.marines .hero.fullscreen > div > div > p:not(:has(picture)) {
+    font-size: 18px;
+    max-width: 600px;
+  }
+}
+
+/* Large desktop */
+@media (width >= 1200px) {
+  body.marines .hero.fullscreen h1 {
+    font-size: 56px;
+  }
+}

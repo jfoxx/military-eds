@@ -19,17 +19,21 @@
   --light-color: #c7c7c7;
   --dark-color: #505050;
   --text-color: #131313;
+  --text-secondary-color: #565656;
   --link-color: #355e93;
-  --link-hover-color: #355e93;
+  --link-hover-color: #1a4480;
   --accent-color: #355e93;
+  --accent-color-light: #4a7ab8;
+  --accent-color-dark: #264a6e;
   --header-background-color: #000;
-  --button-text-color: white; /* default button text color */
+  --header-text-color: #fff;
+  --background-dark: #1c1c1c;
+  --color-foreground-dark: #fff;
+  --button-text-color: white;
+  --border-color: #dcdcdc;
 
-  /* fonts 
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
-*/
-   --body-font-family: "neue-haas-grotesk-text", sans-serif;
+  /* fonts */
+  --body-font-family: "neue-haas-grotesk-text", sans-serif;
   --heading-font-family: "neue-haas-grotesk-display", sans-serif;
 
   /* body sizes */
@@ -50,52 +54,143 @@
 }
 
 /* themes */
+
+/* U.S. Army - Gold/Black theme */
 body.army {
-  --accent-color: #fc0;
+  --accent-color: #ffc500;
+  --accent-color-light: #ffd740;
+  --accent-color-dark: #d4a300;
   --link-color: #1c2226;
-  --button-text-color: #000; /* dark text on yellow for readability */
+  --link-hover-color: #000;
+  --header-background-color: #000;
+  --header-text-color: #ffc500;
+  --background-dark: #1c1c1c;
+  --color-foreground-dark: #fff;
+  --button-text-color: #000;
+  --border-color: #d4a300;
 }
 
+/* U.S. Navy - Navy Blue/Gold theme */
 body.navy {
-  --accent-color: #00283C;
-  --link-color: #1a5eab;
-  --background-dark: #00283C;
-  --button-text-color: white;
+  --accent-color: #003b6f;
+  --accent-color-light: #005a9e;
+  --accent-color-dark: #00284a;
+  --link-color: #005a9e;
+  --link-hover-color: #003b6f;
+  --header-background-color: #00284a;
+  --header-text-color: #fff;
+  --background-dark: #00284a;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #c5a900;
 }
 
+/* U.S. Air Force - Blue/Silver theme
+ * Colors extracted from https://www.af.mil/
+ */
 body.airforce {
   --accent-color: #1c2347;
-  --link-color: #1a5eab;
+  --accent-color-light: #565c7b;
+  --accent-color-dark: #11375c;
+  --link-color: #1c2347;
+  --link-hover-color: #11375c;
+  --header-background-color: #1c2347;
+  --header-text-color: #fff;
   --background-dark: #1c2347;
-  --button-text-color: white;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #1c2347;
+  --text-secondary-color: #707070;
 }
 
+/* 2nd Air Force (AETC) - Subtheme of Air Force
+ * Usage: theme="airforce aetc-2af" in metadata
+ * Colors extracted from https://www.2af.aetc.af.mil/
+ */
+body.airforce.aetc-2af {
+  --accent-color: #1c2347;
+  --accent-color-light: #565c7b;
+  --accent-color-dark: #11375c;
+  --link-color: #1c2347;
+  --link-hover-color: #11375c;
+  --header-background-color: #15263b;
+  --header-text-color: #fff;
+  --background-dark: #1c2347;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #1c2347;
+  --text-secondary-color: #707070;
+}
+
+/* U.S. Marine Corps - Scarlet/Gold theme
+ * Colors extracted from https://www.marines.mil/
+ */
 body.marines {
-  --accent-color: #e41b17;
-  --link-color: #a71930;
-  --background-dark: #171717;
-  --button-text-color: white;
+  --accent-color: #940000;
+  --accent-color-light: #c10000;
+  --accent-color-dark: #720000;
+  --link-color: #940000;
+  --link-hover-color: #720000;
+  --header-background-color: #000;
+  --header-text-color: #fff;
+  --background-dark: #1a1a1a;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #940000;
+  --text-secondary-color: #767676;
+  /* Marines-specific variables */
+  --marines-gold: #c5a900;
+  --marines-scarlet: #940000;
+  --marines-black: #000;
+  --marines-dark-gray: #1a1a1a;
+  --marines-light-gray: #ececec;
+  /* Marines display font (Oswald - similar to Colossalis) */
+  --marines-heading-font: 'Oswald', 'Arial Narrow', sans-serif;
 }
 
+/* U.S. Coast Guard - Racing Stripe Blue/Orange theme */
 body.coastguard {
-  --accent-color: #007dc3;
-  --link-color: #005f86;
-  --background-dark: #013043;
-  --button-text-color: white;
+  --accent-color: #003a70;
+  --accent-color-light: #0066b3;
+  --accent-color-dark: #002347;
+  --link-color: #0066b3;
+  --link-hover-color: #003a70;
+  --header-background-color: #002347;
+  --header-text-color: #fff;
+  --background-dark: #002347;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #ff6600;
 }
 
+/* U.S. Space Force - Black/Silver/Blue theme */
 body.spaceforce {
-  --accent-color: #000;
-  --link-color: #1a5eab;
-  --background-dark: #000;
-  --button-text-color: white;
+  --accent-color: #0033a0;
+  --accent-color-light: #1a56c4;
+  --accent-color-dark: #00206b;
+  --link-color: #1a56c4;
+  --link-hover-color: #0033a0;
+  --header-background-color: #000;
+  --header-text-color: #c0c0c0;
+  --background-dark: #0a0a0a;
+  --color-foreground-dark: #c0c0c0;
+  --button-text-color: #fff;
+  --border-color: #c0c0c0;
 }
 
+/* Department of Defense - Blue theme */
 body.dod {
   --accent-color: #355e93;
-  --link-color: #2020E0;
+  --accent-color-light: #4a7ab8;
+  --accent-color-dark: #264a6e;
+  --link-color: #355e93;
+  --link-hover-color: #264a6e;
+  --header-background-color: #1c1c1c;
+  --header-text-color: #fff;
   --background-dark: #1c1c1c;
-  --button-text-color: white;
+  --color-foreground-dark: #fff;
+  --button-text-color: #fff;
+  --border-color: #355e93;
 }
 
 /* fallback fonts */
@@ -357,5 +452,110 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* ==========================================================================
+   MARINES THEME STYLES
+   ========================================================================== */
+
+/* Marines heading styles - uppercase with letter-spacing and accent bar */
+body.marines h1,
+body.marines h2,
+body.marines h3,
+body.marines h4,
+body.marines h5,
+body.marines h6 {
+  font-family: var(--marines-heading-font);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+/* Marines accent bar under headings */
+body.marines h1::after,
+body.marines h2::after,
+body.marines h3::after {
+  background-color: var(--marines-scarlet);
+  width: 80px;
+}
+
+/* Marines gold accent variant for headings in dark sections */
+body.marines .section.dark h1::after,
+body.marines .section.dark h2::after,
+body.marines .section.dark h3::after {
+  background-color: var(--marines-gold);
+}
+
+/* Marines dark section styling */
+body.marines .section.dark {
+  background-color: var(--marines-dark-gray);
+  color: var(--color-foreground-dark);
+  margin: 0;
+  padding: 60px 0;
+}
+
+body.marines .section.dark h1,
+body.marines .section.dark h2,
+body.marines .section.dark h3,
+body.marines .section.dark h4 {
+  color: #fff;
+}
+
+body.marines .section.dark p {
+  color: rgb(255 255 255 / 85%);
+}
+
+body.marines .section.dark a {
+  color: var(--marines-gold);
+}
+
+body.marines .section.dark a:hover {
+  color: #d4b200;
+}
+
+/* Marines black section (full black background) */
+body.marines .section.black {
+  background-color: var(--marines-black);
+  color: var(--color-foreground-dark);
+  margin: 0;
+  padding: 60px 0;
+}
+
+body.marines .section.black h1,
+body.marines .section.black h2,
+body.marines .section.black h3 {
+  color: var(--marines-gold);
+}
+
+body.marines .section.black h1::after,
+body.marines .section.black h2::after,
+body.marines .section.black h3::after {
+  background-color: var(--marines-gold);
+}
+
+/* Marines light gray section */
+body.marines .section.light {
+  background-color: var(--marines-light-gray);
+}
+
+/* Marines link underline animation */
+body.marines a {
+  position: relative;
+  text-decoration: none;
+}
+
+body.marines main a:not(.button):not(.usa-button)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--marines-scarlet);
+  transition: width 0.3s ease;
+}
+
+body.marines main a:not(.button):not(.usa-button):hover::after {
+  width: 100%;
 }
 

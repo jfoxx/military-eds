@@ -1,4 +1,9 @@
 /* stylelint-disable max-line-length */
+
+/* Marines theme display font - Oswald (similar to Colossalis) */
+/* Loaded from Google Fonts for the Marines theme */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
+
 @font-face {
   font-family: roboto-condensed;
   font-style: normal;
