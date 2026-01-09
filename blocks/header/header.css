@@ -1,7 +1,7 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: black;
-  color: white;
+  background-color: var(--header-background-color, #000);
+  color: var(--header-text-color, #fff);
   width: 100%;
   z-index: 2;
 }
@@ -160,8 +160,10 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 300px;
+  width: auto;
   height: auto;
+  max-height: 116px;
+  max-width: 350px;
 }
 
 /* Adjust logo size on mobile */
@@ -199,7 +201,7 @@ header nav .nav-sections ul {
 }
 
 header nav .nav-sections ul > li {
-  background-color: black;
+  background-color: var(--header-background-color, #000);
   text-transform: uppercase;
 }
 
@@ -361,4 +363,192 @@ nav.breadcrumbs:has(+ .section > .hero-wrapper) {
     a:hover {
         color: rgb(255 255 255 / 80%);
     }
+}
+
+/* ==========================================================================
+   MARINES THEME HEADER/NAV STYLES
+   - Transparent/semi-transparent over hero
+   - Sticky navigation
+   - Inspired by https://www.marines.mil/
+
+   DOM Structure:
+   header.banner-wrapper.header-wrapper
+     .banner.block (government banner)
+     .header.block
+       .nav-wrapper
+         nav#nav
+   ========================================================================== */
+
+/* Marines header element - sticky positioning */
+body.marines.homepage .banner-wrapper.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: auto;
+  background: transparent;
+}
+
+/* Government banner - solid dark background */
+body.marines.homepage header .banner.block {
+  background-color: transparent
+}
+
+/* Navigation wrapper - semi-transparent */
+body.marines.homepage header .header.block .nav-wrapper {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--marines-scarlet);
+  transition: background-color 0.3s ease;
+}
+
+/* Solid background when scrolled */
+body.marines.homepage.scrolled header .header.block .nav-wrapper {
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+/* Adjust main content for fixed header */
+body.marines.homepage main {
+  padding-top: 0;
+}
+
+/* When there's NO fullscreen hero, add top padding to account for fixed header */
+body.marines.homepage main:not(:has(.hero.fullscreen)) {
+  padding-top: var(--nav-height);
+}
+
+/* Marines nav container */
+body.marines header #nav {
+  font-family: var(--marines-heading-font);
+}
+
+/* Marines nav items - transparent background */
+body.marines header #nav .nav-sections ul > li {
+  background-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+body.marines header #nav .nav-sections ul > li > a {
+  color: #fff;
+  transition: color 0.2s ease;
+}
+
+body.marines header #nav .nav-sections ul > li > a:hover {
+  color: var(--marines-gold);
+}
+
+/* Marines dropdown arrow - gold on hover */
+body.marines header #nav .nav-sections .nav-drop::after {
+  border-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+body.marines header #nav .nav-sections .nav-drop:hover::after {
+  border-color: var(--marines-gold);
+}
+
+/* Marines dropdown menu */
+@media (width >= 900px) {
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
+    background-color: #1a1a1a;
+    border: none;
+    border-top: 3px solid var(--marines-scarlet);
+  }
+
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li > ul::before {
+    border-bottom-color: var(--marines-scarlet);
+  }
+
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li > ul > li:last-child {
+    border-bottom: none;
+  }
+
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li > ul > li a {
+    color: #fff;
+    font-family: var(--body-font-family);
+    text-transform: none;
+    letter-spacing: 0;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  body.marines header #nav .nav-sections .default-content-wrapper > ul > li > ul > li a:hover {
+    color: var(--marines-gold);
+    padding-left: 8px;
+  }
+}
+
+/* Marines hamburger icon - white with gold on hover */
+body.marines header #nav .nav-hamburger button {
+  color: #fff;
+}
+
+body.marines header #nav .nav-hamburger button:hover {
+  color: var(--marines-gold);
+}
+
+/* Marines brand/logo area */
+body.marines header .nav-brand a {
+  color: #fff;
+  font-family: var(--marines-heading-font);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ==========================================================================
+   AIR FORCE THEME HEADER/NAV STYLES
+   ========================================================================== */
+
+/* Air Force nav brand area - logo and tagline */
+body.airforce header .nav-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* Air Force tagline styling - text after the logo */
+body.airforce header .nav-brand p {
+  font-family: var(--airforce-display-font);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--header-text-color, #1c2347);
+  margin: 0;
+  line-height: 1.2;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+/* If tagline is on same line as logo (using soft break) */
+body.airforce header .nav-brand a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-decoration: none;
+}
+
+/* Desktop adjustments */
+@media (width >= 900px) {
+  body.airforce header .nav-brand p {
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+}
+
+/* Hide tagline on very small screens if needed */
+@media (width < 480px) {
+  body.airforce header .nav-brand p:not(:has(picture)) {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
 }
