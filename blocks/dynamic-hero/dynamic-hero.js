@@ -1,15 +1,23 @@
 import { fetchNewsArticles } from '../../scripts/news-data.js';
 
 /**
+ * Get base image URL without query parameters
+ */
+function getBaseImageUrl(imageUrl) {
+  return imageUrl.split('?')[0];
+}
+
+/**
  * Build hero HTML from article data (dynamic mode)
  */
 function buildHeroFromArticle(article) {
+  const baseImage = getBaseImageUrl(article.image);
   const heroHTML = `
     <picture>
-      <source type="image/webp" srcset="${article.image}&format=webply&optimize=medium" media="(min-width: 600px)">
-      <source type="image/webp" srcset="${article.image}&format=webply&optimize=medium">
-      <source type="image/jpeg" srcset="${article.image}&format=pjpg&optimize=medium" media="(min-width: 600px)">
-      <img loading="eager" alt="${article.title}" src="${article.image}&format=pjpg&optimize=medium" width="2000" height="1000">
+      <source type="image/webp" srcset="${baseImage}?width=1600&format=webply&optimize=high" media="(min-width: 600px)">
+      <source type="image/webp" srcset="${baseImage}?width=800&format=webply&optimize=high">
+      <source type="image/jpeg" srcset="${baseImage}?width=1600&format=pjpg&optimize=high" media="(min-width: 600px)">
+      <img loading="eager" alt="${article.title}" src="${baseImage}?width=1600&format=pjpg&optimize=high" width="2000" height="1000">
     </picture>
     <div class="dynamic-hero-content">
       <h1>${article.title}</h1>

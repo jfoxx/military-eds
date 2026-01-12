@@ -77,12 +77,62 @@ export function buildArticleImage(imageSrc, alt, eager = false) {
 }
 
 /**
+ * Convert Excel serial date to JavaScript Date
+ * Excel serial dates count days since December 30, 1899
+ * @param {number} serialDate - Excel serial date number
+ * @returns {Date}
+ */
+function excelSerialToDate(serialDate) {
+  // Excel epoch: December 30, 1899 (accounting for Excel's leap year bug)
+  const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+  return new Date(excelEpoch.getTime() + serialDate * 24 * 60 * 60 * 1000);
+}
+
+/**
+ * Parse a date value which could be an Excel serial date, Unix timestamp, or date string
+ * @param {string|number} value - The date value to parse
+ * @returns {Date|null}
+ */
+export function parseArticleDate(value) {
+  if (!value) return null;
+
+  const num = typeof value === 'string' ? parseInt(value, 10) : value;
+
+  if (Number.isNaN(num)) return null;
+
+  // Determine if this is an Excel serial date or Unix timestamp
+  // Excel serial dates for reasonable years (1970-2100) are roughly 25569-73050
+  // Unix timestamps in seconds (1970-2100) are roughly 0-4102444800
+  // Unix timestamps in milliseconds are much larger (13+ digits)
+
+  // If the number is less than 100000, it's likely an Excel serial date
+  // (covers dates from 1900 to ~2173)
+  if (num > 0 && num < 100000) {
+    return excelSerialToDate(num);
+  }
+
+  // If larger than 1 billion, treat as Unix timestamp in milliseconds
+  if (num > 1000000000000) {
+    return new Date(num);
+  }
+
+  // Otherwise treat as Unix timestamp in seconds
+  if (num > 1000000000) {
+    return new Date(num * 1000);
+  }
+
+  // Fallback: try as milliseconds
+  return new Date(num);
+}
+
+/**
  * Format a date for display
- * @param {string|number} releaseDate - Release date timestamp or string
+ * @param {string|number} releaseDate - Release date (Excel serial, Unix timestamp, or string)
  * @returns {string} Formatted date string
  */
 export function formatArticleDate(releaseDate) {
-  const date = new Date(parseInt(releaseDate, 10));
+  const date = parseArticleDate(releaseDate);
+  if (!date || Number.isNaN(date.getTime())) return '';
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
